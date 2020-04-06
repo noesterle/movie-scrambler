@@ -12,12 +12,12 @@ export class MovieComponent implements OnInit {
   movies: Movie[];
   constructor(private movieService: MovieService) {  }
 
-  getLog(): void {
-    this.movieService.getMovie().subscribe(log => this.movies = log);
+  getMovie(): void {
+    this.movieService.getMovie().subscribe(movie => {this.movies = [movie]/*; console.log(this.movies)*/});
   }
 
   ngOnInit(): void {
-    this.getLog();
+    this.getMovie();
   }
 
 }
