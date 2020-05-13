@@ -5,7 +5,7 @@ import {catchError} from "rxjs/operators";
 import {Movie} from "./movie";
 import {MOVIES} from "./mock-movie";
 // Key to be exported from this file can be obtained at https://www.omdbapi.com/apikey.aspx
-import {MOVIE_API_KEY} from "./movie-key";
+import {MOVIE_API_KEY} from "./keys";
 import {NONE_TYPE} from "@angular/compiler";
 
 @Injectable({
@@ -57,8 +57,8 @@ export class MovieService {
   movieUrlKey = "apikey=".concat(MOVIE_API_KEY);
   // movieURLBase: string = "http://www.omdbapi.com/?i=tt3896198";
   movieURLBase: string = "http://www.omdbapi.com/?";
-  // movieSearchParam: string = "t=Fast+Five";
-  movieSearchParam: string = "i=tt3896198";
+  movieSearchParam: string = "t=Fast+Five";
+  // movieSearchParam: string = "i=tt3896198";
   movieURL = this.movieURLBase.concat(this.movieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
 
   constructor(private http: HttpClient) { }

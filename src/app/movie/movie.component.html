@@ -1,10 +1,11 @@
 <h2>Movie Details</h2>
 
-<li *ngFor="let movie of movies">
+<li *ngFor="let movie of movies; index as i">
   <div><span>Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
   <div><span>Released Date: </span>{{movie.Released}}</div>
   <div><span>Genre: </span>{{movie.Genre}}</div>
   <div><span>Plot: </span>{{movie.Plot}}</div>
+  <div><span>Scrambled Plot: </span>{{scrambledPlots[i]}}</div>
   <br>
   <div>Ratings:
     <li *ngFor="let rating of movie.Ratings">
