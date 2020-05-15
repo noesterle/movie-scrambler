@@ -46,12 +46,13 @@ export class WordsService {
           console.log(resp);
           let rand = Math.floor(Math.random()*resp.synonyms.length);
           scrambled[ind] = resp.synonyms[rand];
+
+          scrambleds[i] = scrambled.join(" ");
         });
          // this.http.get<string[]>(wordsURL).pipe(
          //   catchError(this.handleError<string[]>('getSynonyms', [""]))
         // );
       }
-      scrambleds[i] = scrambled.join(" ");
     }
     return of(scrambleds);
     // return of(["asdf"]);
@@ -61,13 +62,13 @@ export class WordsService {
     let wordsURL = this.wordsURLBase.concat("/").concat(word).concat("/").concat(this.wordsEndPoint);
     // return this.http.get<string>(wordsURL,this.wordHttpOptions).pipe(resp => resp.synonyms[Math.floor(Math.random()*resp.synonyms.length)]);
     return this.http.get<Word>(wordsURL, this.wordHttpOptions).pipe(
-      catchError(this.handleError<Word>('getSynonym', this.dummyWord))
+      catchError(this.handleError<Word>('getSynonym', word))
     );
     // return of("test")
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError<T> (operation = 'operation', result?: string) {
+    return (error: any): Observable<Word> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
@@ -75,8 +76,13 @@ export class WordsService {
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);
 
+      let errorWord: Word = {
+        "word": result,
+        "synonyms": [result]
+      };
+
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(errorWord);
     };
   }
 }
