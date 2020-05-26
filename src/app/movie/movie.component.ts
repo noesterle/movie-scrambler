@@ -16,8 +16,19 @@ export class MovieComponent implements OnInit {
     this.movieService.getMovie().subscribe(movie => {this.movies = [movie]/*; console.log(this.movies)*/});
   }
 
+  searchForMovie(title:string): void {
+    if (title != "") {
+      this.movieService.searchMovie(title).subscribe(movie => {
+        this.movies = [movie];
+        console.log(movie);
+        console.log(this.movies);
+      });
+    }
+  }
+
   ngOnInit(): void {
-    this.getMovie();
+    // this.getMovie();
+   this.searchForMovie("Test");
   }
 
 }

@@ -65,6 +65,23 @@ export class MovieService {
 
   getMovie(): Observable<Movie> {
     // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
+    // console.log("GETTING MOVIE");
+    return this.http.get<Movie>(this.movieURL).pipe(
+      catchError(this.handleError<Movie>('getMovie', this.dummyMovie))
+    );
+    // return of(MOVIES);
+  }
+
+  searchMovie(title: string): Observable<Movie> {
+    //TODO: Does not update the webpage when triggered by the Submit button.
+
+    // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
+    // console.log("SEARCHING FOR MOVIE");
+
+    let localMovieSearchParam:string = this.formatSearchParam(title);
+    this.movieURL = this.movieURLBase.concat("t="+localMovieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
+    this.getMovie();
+
     return this.http.get<Movie>(this.movieURL).pipe(
       catchError(this.handleError<Movie>('getMovie', this.dummyMovie))
     );
@@ -83,5 +100,9 @@ export class MovieService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private formatSearchParam(title: string): string {
+    return title;
   }
 }

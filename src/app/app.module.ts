@@ -1,20 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
+
 
 import { AppComponent } from './app.component';
 import { MovieComponent } from './movie/movie.component';
+import { MovieFormComponent } from './movie-form/movie-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MovieComponent
+    MovieComponent,
+    MovieFormComponent,
   ],
   imports: [
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    MovieComponent,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
