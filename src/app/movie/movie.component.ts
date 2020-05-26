@@ -27,20 +27,49 @@ export class MovieComponent implements OnInit {
     this.scrambledPlots = newArray(this.movies.length)
     // this.wordsService.getSynonyms(this.movies).subscribe(scrambledPlots => this.scrambledPlots = scrambledPlots);
     console.log(this.movies)
+    let regExp: RegExp = /[.,?!]$/;
     for (let i in this.movies) {
       let plot = this.movies[i].Plot.split(" ");
+      // let plot = "lovely. day! take...".split(" ");
       // let plot = "lovely day take".split(" ");
       let scrambledTemp = newArray(plot.length);
+      let punctuation:string[] = newArray(plot.length).fill("");
+
       for (let j in plot) {
         let word = plot[j];
 
+        console.log(word);
+        if (regExp.test(word)) { // if there's punctuation
+          let punctuationIndex = -1;
+          for (let k = word.length-1; k > 0; k--) { //find punctuation at the end of the word by searching from the end
+            if (!word.charAt(k).match(regExp)) {
+              punctuationIndex = k+1;
+              break;
+            }
+          }
+
+          //Separate letters and trailing punctuation
+          punctuation[j] = word.slice(punctuationIndex);
+          word=word.slice(0,punctuationIndex);
+
+          // console.log("Post Punct Slice");
+          // console.log(word);
+          // console.log(punctuation);
+        }
+
         this.wordsService.getSynonym(word).subscribe(respWord => {
-          let rand = Math.floor(Math.random()*respWord.synonyms.length);
-          scrambledTemp[j] = respWord.synonyms[rand];
-          // scrambledTemp[j] = "test";
+          console.log(respWord);
+          console.log(respWord.synonyms.length)
+          if (respWord.synonyms.length == 0) { // There are no synonyms, use the word.
+            scrambledTemp[j] = word;
+          }
+          else {
+            let rand = Math.floor(Math.random() * respWord.synonyms.length);
+            scrambledTemp[j] = respWord.synonyms[rand];
+          }
+          scrambledTemp[j] = scrambledTemp[j]+punctuation[j];
           console.log(scrambledTemp);
 
-          console.log(scrambledTemp.join(" "));
           this.scrambledPlots[i] = scrambledTemp.join(" ");
         });
       }
