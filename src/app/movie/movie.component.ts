@@ -9,7 +9,7 @@ import {Movie} from "../movie"; //npm's remove-markdown
 })
 export class MovieComponent implements OnInit {
 
-  movies: Movie[];
+  movies: Movie[] = Array(0);
   constructor(private movieService: MovieService) {  }
 
   getMovie(): void {
@@ -29,6 +29,17 @@ export class MovieComponent implements OnInit {
   ngOnInit(): void {
     // this.getMovie();
    this.searchForMovie("Test");
+    // this.searchForMovie("");
+  }
+
+  erasePlot(plot: string) {
+    console.log("ERASE PLOT");
+    for (let movie of this.movies) {
+      if (movie.Plot == plot) {
+        movie.Plot = "";
+      }
+    }
+    plot = "";
   }
 
 }
