@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MovieComponent} from "../movie/movie.component";
+import { FormControl } from '@angular/forms';
+import {MessageService} from "../message.service";
 
 @Component({
   selector: 'app-movie-form',
@@ -8,14 +10,18 @@ import {MovieComponent} from "../movie/movie.component";
 })
 export class MovieFormComponent implements OnInit {
 
-  constructor(private movieComponent: MovieComponent) { }
+  form = new FormControl('');
+
+  constructor(private movieComponent: MovieComponent, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(){
-    console.log("SUBMITTED");
-    this.movieComponent.searchForMovie("Fast+Five");
+  onSubmit(value: string){
+    // console.log(value);
+    // console.log("SUBMITTED");
+    // this.movieComponent.searchForMovie(value);
+    this.messageService.sendMessage("search",value)
   }
 
 }

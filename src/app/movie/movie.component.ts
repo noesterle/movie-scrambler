@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MovieService} from "../movie.service";
-import {Movie} from "../movie"; //npm's remove-markdown
+import {Movie} from "../movie";
+import {MessageService} from "../message.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-movie',
@@ -9,8 +11,18 @@ import {Movie} from "../movie"; //npm's remove-markdown
 })
 export class MovieComponent implements OnInit {
 
+  subscription: Subscription;
+  private message: any;
   movies: Movie[] = Array(0);
-  constructor(private movieService: MovieService) {  }
+
+  constructor(private movieService: MovieService, private messageService: MessageService) {
+    this.subscription = this.messageService.getMessage().subscribe(message => {
+      if (message.type == "search") {
+        this.message = message;
+        this.searchForMovie(message.text);
+      }
+    });
+  }
 
   getMovie(): void {
     this.movieService.getMovie().subscribe(movie => {this.movies = [movie]/*; console.log(this.movies)*/});
@@ -20,7 +32,6 @@ export class MovieComponent implements OnInit {
     if (title != "") {
       this.movieService.searchMovie(title).subscribe(movie => {
         this.movies = [movie];
-        console.log(movie);
         console.log(this.movies);
       });
     }
@@ -30,6 +41,11 @@ export class MovieComponent implements OnInit {
     // this.getMovie();
    this.searchForMovie("Test");
     // this.searchForMovie("");
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 
   erasePlot(plot: string) {
