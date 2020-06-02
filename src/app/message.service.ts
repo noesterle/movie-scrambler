@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MessageService {
+  // https://jasonwatmore.com/post/2018/06/25/angular-6-communicating-between-components-with-observable-subject
   private subject = new Subject<any>();
 
   constructor() { }
