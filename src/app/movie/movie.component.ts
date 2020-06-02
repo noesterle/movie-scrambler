@@ -17,8 +17,10 @@ export class MovieComponent implements OnInit {
 
   constructor(private movieService: MovieService, private messageService: MessageService) {
     this.subscription = this.messageService.getMessage().subscribe(message => {
-      if (message.type == "search") {
+      // console.log("GOT A MESSAGE: " + message.type + " " + message.text);
+      if (message.type == "search" && (this.message ===  undefined || this.message.text !== message.text)) {
         this.message = message;
+        // console.log("HAVE A MESSAGE: " + this.message.type + " " + this.message.text);
         this.searchForMovie(message.text);
       }
     });
@@ -32,7 +34,7 @@ export class MovieComponent implements OnInit {
     if (title != "") {
       this.movieService.searchMovie(title).subscribe(movie => {
         this.movies = [movie];
-        console.log(this.movies);
+        // console.log(this.movies);
       });
     }
   }

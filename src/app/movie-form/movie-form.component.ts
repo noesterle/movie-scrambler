@@ -12,7 +12,7 @@ export class MovieFormComponent implements OnInit {
 
   form = new FormControl('');
 
-  constructor(private movieComponent: MovieComponent, private messageService: MessageService) { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -20,7 +20,6 @@ export class MovieFormComponent implements OnInit {
   onSubmit(value: string){
     // console.log(value);
     // console.log("SUBMITTED");
-    // this.movieComponent.searchForMovie(value);
     this.messageService.sendMessage("search",value)
   }
 
