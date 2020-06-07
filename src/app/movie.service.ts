@@ -54,6 +54,8 @@ export class MovieService {
     "imdbVotes": "N/A",
   };
 
+  encoding = new Map<string,string>();
+
   movieUrlKey = "apikey=".concat(MOVIE_API_KEY);
   // movieURLBase: string = "http://www.omdbapi.com/?i=tt3896198";
   movieURLBase: string = "http://www.omdbapi.com/?";
@@ -61,7 +63,9 @@ export class MovieService {
   movieSearchParam: string = "i=tt3896198";
   movieURL = this.movieURLBase.concat(this.movieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.setURLEncoding();
+  }
 
   getMovie(): Observable<Movie> {
     // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
@@ -102,19 +106,35 @@ export class MovieService {
     };
   }
 
-  private formatSearchParam(title: string): string {
+  private setURLEncoding() {
     // https://secure.n-able.com/webhelp/NC_9-1-0_SO_en/Content/SA_docs/API_Level_Integration/API_Integration_URLEncoding.html
+    this.encoding.set("\\$","%24");
+    this.encoding.set("&","%26");
+    this.encoding.set("\\+","%2B");
+    this.encoding.set(",","%2C");
+    this.encoding.set("/","%2F");
+    this.encoding.set(":","%3A");
+    this.encoding.set(";","%3B");
+    this.encoding.set("=","%3D");
+    this.encoding.set("\\?","%3F");
+    this.encoding.set("@","%40");
+    // this.encoding.set(" ","+");
+  }
+
+  private formatSearchParam(title: string): string {
     // console.log("Before Subs: " + title);
-    title = title.replace(new RegExp("\\$",'g'), "%24");
-    title = title.replace(new RegExp("&",'g'), "%26");
-    title = title.replace(new RegExp("\\+",'g'), "%2B");
-    title = title.replace(new RegExp(",",'g'), "%2C");
-    title = title.replace(new RegExp("/",'g'), "%2F");
-    title = title.replace(new RegExp(":",'g'), "%3A");
-    title = title.replace(new RegExp(";",'g'), "%3B");
-    title = title.replace(new RegExp("=",'g'), "%3D");
-    title = title.replace(new RegExp("\\?",'g'), "%3F");
-    title = title.replace(new RegExp("@",'g'), "%40");
+    // Must be done before using the Map to encode the title for the URL, so to not encode '%' that are part of encodings.
+    title = title.replace(new RegExp("%",'g'), "%25");
+
+    // Check to make sure the encoding map has been filled, if not fill it before encoding using the map.
+    if (!this.encoding.has("&")) {
+      this.setURLEncoding();
+    }
+    for (let key of this.encoding.keys()) {
+      title = title.replace(new RegExp(key),this.encoding.get(key))
+    }
+
+    // Must be done after so the '+' that's an OMDB encoding for ' ' (Space) isn't encoded a second time to '%2B'.
     title = title.replace(new RegExp(" ",'g'), "+");
     // console.log("After Subs: " + title);
     return title;
