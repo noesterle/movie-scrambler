@@ -32,32 +32,6 @@ export class WordsService {
 
   constructor(private http: HttpClient) { }
 
-  getSynonyms(movies: Movie[]): Observable<string[]>{
-    let scrambleds:string[] = newArray(movies.length)
-    for (let i in movies){
-      // let plot = movies[i].Plot.split(" ");
-      let plot = "lovely day take".split(" ");
-      let scrambled:string[] = newArray(plot.length);
-      for (let ind in plot){
-        let wordsURL = this.wordsURLBase.concat("/").concat(plot[ind]).concat("/").concat(this.wordsEndPoint);
-        // let wordsURL = "";
-        // this.http.get<any>(wordsURL,this.wordHttpOptions).subscribe(resp => console.log(resp.headers.get('x-ratelimit-requests-remaining')))
-        this.http.get<any>(wordsURL,this.wordHttpOptions).subscribe(resp => {
-          console.log(resp);
-          let rand = Math.floor(Math.random()*resp.synonyms.length);
-          scrambled[ind] = resp.synonyms[rand];
-
-          scrambleds[i] = scrambled.join(" ");
-        });
-         // this.http.get<string[]>(wordsURL).pipe(
-         //   catchError(this.handleError<string[]>('getSynonyms', [""]))
-        // );
-      }
-    }
-    return of(scrambleds);
-    // return of(["asdf"]);
-  }
-
   getSynonym(word: string): Observable<Word>{
     let wordsURL = this.wordsURLBase.concat("/").concat(word).concat("/").concat(this.wordsEndPoint);
     // return this.http.get<string>(wordsURL,this.wordHttpOptions).pipe(resp => resp.synonyms[Math.floor(Math.random()*resp.synonyms.length)]);

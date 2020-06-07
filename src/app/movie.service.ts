@@ -18,7 +18,6 @@ export class MovieService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Origin':'*',
     })
   };
 
@@ -57,29 +56,15 @@ export class MovieService {
   encoding = new Map<string,string>();
 
   movieUrlKey = "apikey=".concat(MOVIE_API_KEY);
-  // movieURLBase: string = "http://www.omdbapi.com/?i=tt3896198";
   movieURLBase: string = "http://www.omdbapi.com/?";
-  movieSearchParam: string = "t=Fast+Five";
   // movieSearchParam: string = "i=tt3896198";
-  movieURL = this.movieURLBase.concat(this.movieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
+  movieURL = "";
 
   constructor(private http: HttpClient) {
     this.setURLEncoding();
   }
 
-  getMovie(): Observable<Movie> {
-    // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
-    // console.log("GETTING MOVIE");
-    return this.http.get<Movie>(this.movieURL).pipe(
-      catchError(this.handleError<Movie>('getMovie', this.dummyMovie))
-    );
-    // return of(MOVIES);
-  }
-
   searchMovie(title: string): Observable<Movie> {
-    //TODO: Does not update the webpage when triggered by the Submit button.
-
-    // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
     // console.log("SEARCHING FOR MOVIE:" + title);
 
     let localMovieSearchParam:string = this.formatSearchParam(title);

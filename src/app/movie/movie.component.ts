@@ -29,19 +29,9 @@ export class MovieComponent implements OnInit {
     });
   }
 
-  getMovie(): void {
-    this.movieService.getMovie().subscribe(movie =>
-    {
-      this.movies = [movie];
-      this.getNewPlot();
-    });
-  }
-
   getNewPlot(): void {
     this.scrambledPlots = newArray(this.movies.length)
-    // this.wordsService.getSynonyms(this.movies).subscribe(scrambledPlots => this.scrambledPlots = scrambledPlots);
-    // console.log(this.movies)
-    let regExp: RegExp = /[.,?!]$/;
+    let regExp: RegExp = /[.,?!:]$/;
     for (let i in this.movies) {
       let plot = this.movies[i].Plot.split(" ");
       // let plot = "lovely. day! take...".split(" ");
@@ -94,16 +84,13 @@ export class MovieComponent implements OnInit {
     if (title != "") {
       this.movieService.searchMovie(title).subscribe(movie => {
         this.movies = [movie];
-        // console.log(this.movies);
         this.getNewPlot();
       });
     }
   }
 
   ngOnInit(): void {
-    // this.getMovie();
    this.searchForMovie("Test");
-    // this.searchForMovie("");
   }
 
   ngOnDestroy() {
@@ -112,7 +99,6 @@ export class MovieComponent implements OnInit {
   }
 
   erasePlot(plot: string) {
-    console.log("ERASE PLOT");
     for (let movie of this.movies) {
       if (movie.Plot == plot) {
         movie.Plot = "";

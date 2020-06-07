@@ -18,8 +18,6 @@ export class MovieFormComponent implements OnInit {
   }
 
   onSubmit(value: string){
-    // console.log(value);
-    // console.log("SUBMITTED");
     this.messageService.sendMessage("search",value)
   }
 
