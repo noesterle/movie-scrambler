@@ -76,9 +76,10 @@ export class MovieService {
     //TODO: Does not update the webpage when triggered by the Submit button.
 
     // this.http.get<Movie[]>(this.movieURL/*, this.movieHttpOptions*/).subscribe(resp => console.log(resp));
-    console.log("SEARCHING FOR MOVIE:" + title);
+    // console.log("SEARCHING FOR MOVIE:" + title);
 
     let localMovieSearchParam:string = this.formatSearchParam(title);
+    // console.log("TITLE FOR URL:" + localMovieSearchParam);
     this.movieURL = this.movieURLBase.concat("t="+localMovieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
 
     return this.http.get<Movie>(this.movieURL).pipe(
@@ -102,6 +103,20 @@ export class MovieService {
   }
 
   private formatSearchParam(title: string): string {
+    // https://secure.n-able.com/webhelp/NC_9-1-0_SO_en/Content/SA_docs/API_Level_Integration/API_Integration_URLEncoding.html
+    // console.log("Before Subs: " + title);
+    title = title.replace(new RegExp("\\$",'g'), "%24");
+    title = title.replace(new RegExp("&",'g'), "%26");
+    title = title.replace(new RegExp("\\+",'g'), "%2B");
+    title = title.replace(new RegExp(",",'g'), "%2C");
+    title = title.replace(new RegExp("/",'g'), "%2F");
+    title = title.replace(new RegExp(":",'g'), "%3A");
+    title = title.replace(new RegExp(";",'g'), "%3B");
+    title = title.replace(new RegExp("=",'g'), "%3D");
+    title = title.replace(new RegExp("\\?",'g'), "%3F");
+    title = title.replace(new RegExp("@",'g'), "%40");
+    title = title.replace(new RegExp(" ",'g'), "+");
+    // console.log("After Subs: " + title);
     return title;
   }
 }
