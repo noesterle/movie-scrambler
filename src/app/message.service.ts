@@ -11,7 +11,7 @@ export class MessageService {
   constructor() { }
 
   sendMessage(type:string, message: string) {
-    console.log("SENDING MESSAGE")
+    // console.log("SENDING MESSAGE")
     this.subject.next({type:type, text: message });
   }
 

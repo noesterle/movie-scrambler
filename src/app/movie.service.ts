@@ -59,8 +59,8 @@ export class MovieService {
   movieUrlKey = "apikey=".concat(MOVIE_API_KEY);
   // movieURLBase: string = "http://www.omdbapi.com/?i=tt3896198";
   movieURLBase: string = "http://www.omdbapi.com/?";
-  // movieSearchParam: string = "t=Fast+Five";
-  movieSearchParam: string = "i=tt3896198";
+  movieSearchParam: string = "t=Fast+Five";
+  // movieSearchParam: string = "i=tt3896198";
   movieURL = this.movieURLBase.concat(this.movieSearchParam).concat("&").concat(this.movieUrlKey).concat("&plot=full");
 
   constructor(private http: HttpClient) {
