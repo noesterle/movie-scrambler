@@ -1,0 +1,15 @@
+.movie-cat{
+  font-weight: bold;
+}
+.indent {
+  margin-left: 40px;
+}
+
+div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+li {
+  list-style: none;
+}

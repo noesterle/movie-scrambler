@@ -1,19 +1,19 @@
 <h2>Movie Details</h2>
 
 <li *ngFor="let movie of movies; index as i">
-  <div><span>Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
-  <div><span>Released Date: </span>{{movie.Released}}</div>
-  <div><span>Genre: </span>{{movie.Genre}}</div>
+  <div><span class="movie-cat"> Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
+  <div><span class="movie-cat">Released Date: </span>{{movie.Released}}</div>
+  <div><span class="movie-cat">Genre: </span>{{movie.Genre}}</div>
 <!--  Two way binding to edit Genre in the model and therefore view. -->
 <!--  <div><input type="text" [(ngModel)]="movie.Genre"></div>-->
-  <div><span>Plot: </span>{{movie.Plot}}</div>
+  <div><span class="movie-cat">Plot: </span>{{movie.Plot}}</div>
 <!--  Button to click to erase the plot of the movie, which then updates the view.-->
 <!--  <button (click)="erasePlot(movie.Plot)">Erase Plot</button>-->
-  <div><span>Scrambled Plot: </span>{{scrambledPlots[i]}}</div>
+  <div><span class="movie-cat">Scrambled Plot: </span>{{scrambledPlots[i]}}</div>
   <br>
-  <div>Ratings:
+  <div><span class="movie-cat">Ratings:</span>
     <li *ngFor="let rating of movie.Ratings">
-      <div><span>{{rating.Source}}: {{rating.Value}}</span></div>
+      <div class="indent"><span>{{rating.Source}}: {{rating.Value}}</span></div>
     </li>
   </div>
 </li>
