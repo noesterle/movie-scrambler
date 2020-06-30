@@ -16,6 +16,10 @@ div {
   margin-left: 12.5%; /* (100 - app.component.hr.width) / 2*/
 }
 
+button {
+  margin-left: 12.5%; /* (100 - app.component.hr.width) / 2*/
+}
+
 li {
   list-style: none;
 }

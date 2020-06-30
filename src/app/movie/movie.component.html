@@ -2,6 +2,13 @@
 
 <li *ngFor="let movie of movies; index as i">
   <div><span class="movie-cat"> Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
+  <div *ngIf="displayPosters; then thenBlock else elseBlock"></div>
+  <div>
+    <ng-template #thenBlock><button (click)="displayPoster()">Hide Poster</button>
+      <div><img src="{{movie.Poster}}" alt="{{movie.Title}} Poster"></div>
+    </ng-template>
+    <ng-template #elseBlock><button (click)="displayPoster()">Display Poster</button></ng-template>
+  </div>
   <div><span class="movie-cat">Released Date: </span>{{movie.Released}}</div>
   <div><span class="movie-cat">Genre: </span>{{movie.Genre}}</div>
 <!--  Two way binding to edit Genre in the model and therefore view. -->

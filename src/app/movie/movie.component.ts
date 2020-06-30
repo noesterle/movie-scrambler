@@ -17,6 +17,7 @@ export class MovieComponent implements OnInit {
   private message: any;
   movies: Movie[] = Array(0);
   scrambledPlots: string[];
+  displayPosters: boolean = false
 
   constructor(private movieService: MovieService, private messageService: MessageService, private wordsService: WordsService) {
     this.subscription = this.messageService.getMessage().subscribe(message => {
@@ -105,6 +106,11 @@ export class MovieComponent implements OnInit {
       }
     }
     plot = "";
+  }
+
+  displayPoster() {
+    console.log("TOGGLE DISPLAY POSTER");
+    this.displayPosters = !this.displayPosters;
   }
 
 }
