@@ -85,7 +85,10 @@ export class MovieComponent implements OnInit {
     if (title != "") {
       this.movieService.searchMovie(title).subscribe(movie => {
         this.movies = [movie];
+
+        // Swap which lines are commented below to enable or disable synonyms nicely.
         this.getNewPlot();
+        // this.scrambledPlots = ['Scrambled Plat Filler']
       });
     }
   }
