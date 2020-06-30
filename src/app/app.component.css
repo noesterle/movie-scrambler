@@ -1,13 +1,27 @@
-app-movie-form, app-movie, h1, div {
+app-movie-form, app-movie, div {
   font-family: Arial, Helvetica, sans-serif;
 
   white-space: normal;
   overflow: hidden;
   text-overflow: "...";
-  max-width: 35%;
+  max-width: 75%;
+  margin-left: 12.5%; /* (100 - hr.width) / 2*/
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
 }
 
 div {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+hr {
+  height: 3px;
+  border-width: 0px;
+  color: lightgray;
+  background-color: lightgray;
+  width: 75%;
 }

@@ -10,3 +10,10 @@ button {
   font-size: 14px;
 }
 
+.container {
+  margin-left: 12.5%; /* (100 - app.component.hr.width) / 2*/
+}
+
+h2 {
+  text-align: center;
+}
