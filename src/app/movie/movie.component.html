@@ -28,11 +28,9 @@
   </li>
 </ng-template>
 <ng-template #showMessageBlock>
-  <div *ngIf="movieSearchError; then showSearchErrorBlock else showSearchBlock"></div>
+  <div *ngIf="movieSearchError; then showSearchErrorBlock"></div>
   <ng-template #showSearchErrorBlock>
-    <div>The movie searched for does not exist. Search for a movie to show it's information and scrambled plot.</div>
+    <div>The movie searched for does not exist. </div>
   </ng-template>
-  <ng-template #showSearchBlock>
-    <div>Search for a movie to show it's information and scrambled plot.</div>
-  </ng-template>
+  <div>Search for a movie to show it's information and scrambled plot.</div>
 </ng-template>

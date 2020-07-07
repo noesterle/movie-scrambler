@@ -85,11 +85,12 @@ export class MovieComponent implements OnInit {
 
   searchForMovie(title:string): void {
     if (title != "") {
-      this.showMovie = true;
       this.movieService.searchMovie(title).subscribe(
         (movie) => {
           if (movie.Response == "True") {
+            // console.log("Movie found.")
             this.movies = [movie];
+            this.showMovie = true;
             this.movieSearchError = false;
 
             // Swap which lines are commented below to enable or disable synonyms nicely.
@@ -97,7 +98,7 @@ export class MovieComponent implements OnInit {
             // this.scrambledPlots = ['Scrambled Plat Filler']
           }
           else if (movie.Response == "False"){
-            console.log("Movie not found.")
+            // console.log("Movie not found.")
             this.showMovie = false;
             this.movieSearchError = true;
           }
@@ -107,7 +108,9 @@ export class MovieComponent implements OnInit {
         }
       );
     } else {
+      // console.log("No Movie searched for.")
       this.showMovie = false;
+      this.movieSearchError = false;
     }
   }
 
