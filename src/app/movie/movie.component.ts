@@ -19,6 +19,7 @@ export class MovieComponent implements OnInit {
   scrambledPlots: string[];
   displayPosters: boolean = false
   showMovie: boolean = false;
+  movieSearchError = false;
 
   constructor(private movieService: MovieService, private messageService: MessageService, private wordsService: WordsService) {
     this.subscription = this.messageService.getMessage().subscribe(message => {
@@ -89,6 +90,7 @@ export class MovieComponent implements OnInit {
         (movie) => {
           if (movie.Response == "True") {
             this.movies = [movie];
+            this.movieSearchError = false;
 
             // Swap which lines are commented below to enable or disable synonyms nicely.
             this.getNewPlot();
@@ -97,6 +99,7 @@ export class MovieComponent implements OnInit {
           else if (movie.Response == "False"){
             console.log("Movie not found.")
             this.showMovie = false;
+            this.movieSearchError = true;
           }
         },
         (error) => {
