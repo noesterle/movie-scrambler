@@ -1,26 +1,32 @@
 <h2>Movie Details</h2>
 
-<li *ngFor="let movie of movies; index as i">
-  <div><span class="movie-cat"> Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
-  <div *ngIf="displayPosters; then thenBlock else elseBlock"></div>
-  <div>
-    <ng-template #thenBlock><button (click)="displayPoster()">Hide Poster</button>
-      <div><img src="{{movie.Poster}}" alt="{{movie.Title}} Poster"></div>
-    </ng-template>
-    <ng-template #elseBlock><button (click)="displayPoster()">Display Poster</button></ng-template>
-  </div>
-  <div><span class="movie-cat">Released Date: </span>{{movie.Released}}</div>
-  <div><span class="movie-cat">Genre: </span>{{movie.Genre}}</div>
-<!--  Two way binding to edit Genre in the model and therefore view. -->
-<!--  <div><input type="text" [(ngModel)]="movie.Genre"></div>-->
-  <div><span class="movie-cat">Plot: </span>{{movie.Plot}}</div>
-<!--  Button to click to erase the plot of the movie, which then updates the view.-->
-<!--  <button (click)="erasePlot(movie.Plot)">Erase Plot</button>-->
-  <div><span class="movie-cat">Scrambled Plot: </span>{{scrambledPlots[i]}}</div>
-<!--  <br>-->
-  <div><span class="movie-cat">Ratings:</span>
-    <li *ngFor="let rating of movie.Ratings">
-      <div class="indent"><span>{{rating.Source}}: {{rating.Value}}</span></div>
-    </li>
-  </div>
-</li>
+<div *ngIf="showMovie; then showMovieBlock else showMessageBlock"></div>
+<ng-template #showMovieBlock>
+  <li *ngFor="let movie of movies; index as i">
+    <div><span class="movie-cat"> Movie Title: </span><a href="{{movie.Poster}}">{{movie.Title}}</a></div>
+    <div *ngIf="displayPosters; then thenBlock else elseBlock"></div>
+    <div>
+      <ng-template #thenBlock><button (click)="displayPoster()">Hide Poster</button>
+        <div><img src="{{movie.Poster}}" alt="{{movie.Title}} Poster"></div>
+      </ng-template>
+      <ng-template #elseBlock><button (click)="displayPoster()">Display Poster</button></ng-template>
+    </div>
+    <div><span class="movie-cat">Released Date: </span>{{movie.Released}}</div>
+    <div><span class="movie-cat">Genre: </span>{{movie.Genre}}</div>
+  <!--  Two way binding to edit Genre in the model and therefore view. -->
+  <!--  <div><input type="text" [(ngModel)]="movie.Genre"></div>-->
+    <div><span class="movie-cat">Plot: </span>{{movie.Plot}}</div>
+  <!--  Button to click to erase the plot of the movie, which then updates the view.-->
+  <!--  <button (click)="erasePlot(movie.Plot)">Erase Plot</button>-->
+    <div><span class="movie-cat">Scrambled Plot: </span>{{scrambledPlots[i]}}</div>
+  <!--  <br>-->
+    <div><span class="movie-cat">Ratings:</span>
+      <li *ngFor="let rating of movie.Ratings">
+        <div class="indent"><span>{{rating.Source}}: {{rating.Value}}</span></div>
+      </li>
+    </div>
+  </li>
+</ng-template>
+<ng-template #showMessageBlock>
+  <div>Search for a movie to show it's information and scrambled plot.</div>
+</ng-template>
