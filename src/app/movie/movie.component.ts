@@ -18,6 +18,7 @@ export class MovieComponent implements OnInit {
   movies: Movie[] = Array(0);
   scrambledPlots: string[];
   displayPosters: boolean = false
+  showMovie: boolean = false;
 
   constructor(private movieService: MovieService, private messageService: MessageService, private wordsService: WordsService) {
     this.subscription = this.messageService.getMessage().subscribe(message => {
@@ -83,15 +84,18 @@ export class MovieComponent implements OnInit {
 
   searchForMovie(title:string): void {
     if (title != "") {
+      this.showMovie = true;
       this.movieService.searchMovie(title).subscribe(movie => {
         this.movies = [movie];
         this.getNewPlot();
       });
+    } else {
+      this.showMovie = false;
     }
   }
 
   ngOnInit(): void {
-   this.searchForMovie("Test");
+   // this.searchForMovie("Test");
   }
 
   ngOnDestroy() {
